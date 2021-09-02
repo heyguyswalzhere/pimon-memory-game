@@ -97,3 +97,72 @@ def yellowPressed():
      else:
          print("Incorrect!")
          notFailed == False
+
+user = input("enter 'y' to play...") #asks the user to play
+if user == 'y':
+    playing = True
+else: playing = False
+
+#this list will hold the ranomly selected leds to be pressed in order
+
+memory =[]
+
+while playing: #first loop allows multiple games to be played
+    
+    level = 0 #reset level indicator
+    notFailed = True #Boolean to handle end of game
+
+    while notFailed: #each iteration of this loop handles a level
+        
+        #increase level counter by one, then print current level (game will start at level 1)
+        level += 1
+        print("Begin level " + str(level))
+
+        #turns all LEDs on, then turns them off
+
+        for led in leds:
+            led.on()
+        sleep(.5)
+        for led in leds:
+            led.off()
+        sleep(1)
+
+        #generates a random integer from 0 to the length of 
+        # the 'leds' list. The integer is usd to select an LED
+        # and add it to the end of the 'memory' listpygame.examples.mask.main()
+
+        randomLED = leds[randint(0,len(leds)-1)]
+        memory.append(randomeLED)
+        #this for loop blinks each LED in 'memory' in order
+
+        for led in memory:
+            led.on()
+            sleep(.25)
+            led.off()
+            sleep(.25)
+        #'index' keeps track of our location in the 'memory' list
+        #if the correct button is pressed, 'index' increases by one. (see functions above)
+
+    
+        index  = 0
+
+        #this loop listend for a button to be pressed. Then it calls the associated function
+        #that determines if the correct button was pressed and increases 'index'
+
+        while index < len(memory) and notFailed:
+            redB.when_pressed = redPressed
+            greenB.when_pressed = greenPressed
+            blueB.when_pressed = bluePressed
+            yellowB.when_pressed = yellowPressed
+    
+    #game has ended. clear the list holding LED order, print final level, and ask to play again. 
+
+    memory.clear()
+    print("You made it to level " + str(level)+1 + "!")
+    user = input("enter 'y' to play again...")
+     
+    if user != 'y':
+        playing = False
+print("Goodbye!")
+
+
